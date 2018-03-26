@@ -11,10 +11,26 @@ ul li{
 	margin-left: 10px;
 }
 
+label, input{
+	margin-bottom: 10px;
+}
+
 .menu {
 	display: flex;
  	flex-direction: row;
  	justify-content: flex-end;
  	padding-left: 0px;
+}
+
+input{
+	padding: 5px 0px 5px 0px;
+}
+
+.input-has-error{
+	color: #d63031;
+}
+
+.has-success{
+	color: #28a745;
 }
 

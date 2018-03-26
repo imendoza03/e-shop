@@ -11,15 +11,6 @@ form{
 	width: 30%;
 }
 
-label, input{
-	margin-bottom: 10px;
-}
-
-input{
-	padding: 5px 0px 5px 0px;
-	background-color: #fff;
-}
-
 button{
 	color: #fff;
 	background-color: #28a745;

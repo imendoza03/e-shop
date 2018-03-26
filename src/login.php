@@ -1,3 +1,69 @@
+<?php
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    $userName = $_POST['username'] ?? null;
+    $password = $_POST['password'] ?? null;
+    
+    $userNameHasError = (strlen($userName) < 3);
+    $passwordHasError = (strlen($password) < 5);
+    
+    if (!$userNameHasError && !$passwordHasError) {
+        $userExists = verifyUser($username ?? '', $passowrd ?? '');
+        
+        if(!$userExists) {
+            echo 'Either the username or password does not exist';
+        }
+        
+        session_start();
+        $_SESSION['user'] = $userName;
+        $_SESSION['date'] = new DateTime('now');
+        $_SESSION['isLogged'] = true;
+        
+        redirect("http://localhost/home.php");
+    }
+    
+}
+
+function redirect($url) {
+    header($url);
+    exit();
+}
+
+function verifyUser($username, $passowrd){
+    
+    $dbConnection = startDbConnection();
+    $statement = 'SELECT * FROM USERS WHERE username=:username AND password=:password';
+    $preparedQuery = $dbConnection->prepare($statement);
+    
+    if($preparedQuery) {
+        $preparedQuery->bindValue('username', $username);
+        $preparedQuery->bindValue('password', hash('sha256', $passowrd));
+        
+        if(!$preparedQuery->execute()) {
+            echo 'User has not found in the db';
+            return;
+        }
+        
+        $user = $preparedQuery->fetch();
+        
+        if(!$user){
+           return false;
+        }
+        
+        return true;
+    }
+}
+
+function startDbConnection() {
+    try {
+        $connection = new \PDO('mysql:host=localhost;dbname=eshop', 'root');
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+    
+    return $connection;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,8 +85,17 @@
 	 	<form action="/login.php" method="POST">
 	 		<label for="username">Username: </label>
 	 		<input type="text" name="username" placeholder="enter user name...">
+	 
+	 		<?php if($userNameHasError ?? false) {
+        	    echo "<p class='input-has-error'>" . 'Username has error, it must have a minimum lenght of 2' . '</p>';
+        	}?>
+      
 	 		<label for="password">Password: </label>
 	 		<input type="password" name="password" placeholder="enter password..."/>
+	 		
+	 		<?php if($passwordHasError ?? false) {
+        	    echo "<p class='input-has-error'>" . 'Password has error, it must have a minimum lenght of 5' . '</p>';
+        	}?>
 	 		<button type="submit">Login</button>
 	 	</form>
 	</main>
