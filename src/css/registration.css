@@ -1,0 +1,11 @@
+.title, form{
+	width: 30%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	margin-top: 20px;
+}
+
+.menu{
+	justify-content: flex-start;
+}
