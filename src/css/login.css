@@ -1,0 +1,38 @@
+main{
+	width: 80%;
+	margin: auto;
+}
+
+form{
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	padding: 20px;
+	width: 30%;
+}
+ul{
+	padding-left: 0;
+	list-style-type: none;
+}
+
+.menu {
+	display: flex;
+ 	flex-direction: row;
+ 	justify-content: flex-start;
+ 	padding-left: 0px;
+}
+
+label, input{
+	margin-bottom: 10px;
+}
+
+input{
+	padding: 5px 0px 5px 0px;
+	background-color: #fff;
+}
+
+button{
+	color: #fff;
+	background-color: #28a745;
+	padding: 5px 0px 5px 0px;
+}
