@@ -1,0 +1,10 @@
+body{
+	width: 80%;
+	margin: auto;
+}
+form{
+	display:flex;
+	flex-direction: column;
+	width: 50%;
+	margin-top: 10px;
+}

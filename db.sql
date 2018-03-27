@@ -4,9 +4,16 @@ CREATE DATABASE IF NOT EXISTS eshop DEFAULT CHARACTER SET utf8 COLLATE = utf8_bi
 
 #Table creation
 
-CREATE TABLE `eshop` . `users` (
+CREATE TABLE IF NOT EXISTS `eshop` . `users` (
 	id int unsigned auto_increment primary key,
 	username VARCHAR(255) ,
     `name` VARCHAR(255) ,
     `password` VARCHAR(255)
+) engine = InnoDB default character set  = utf8 collate = utf8_bin;
+
+CREATE TABLE IF NOT EXISTS `eshop` . `articles` (
+	id int unsigned auto_increment primary key,
+	`name` VARCHAR(255) ,
+    description VARCHAR(255) ,
+    image VARCHAR(255)
 ) engine = InnoDB default character set  = utf8 collate = utf8_bin;

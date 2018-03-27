@@ -1,8 +1,3 @@
-<?php
-if($_SERVER['REQUEST_METHOD'] == 'GET'){
-    
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +5,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Registration</title>
-  <link rel="stylesheet" type="text/css" href="/css/registrations.css" />
+  <link rel="stylesheet" type="text/css" href="/css/product-detail.css" />
   <link rel="stylesheet" type="text/css" href="/css/common.css" />
 </head>
 <body>
@@ -18,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
     <main>
         <section>
         	<article>
-        		<img src="">
+        		<img src="../img/sneaker_1.jpg">
         		<button type="submit">Add to cart</button>
         	</article>
         	<article>
