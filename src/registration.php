@@ -73,14 +73,14 @@ function startDbConnection() {
         	<input type="text" name="reg-username" placeholder="enter user name..." value="<?php if($userNameHasError ?? false){echo htmlentities($userName ?? '');}?>"/>
         	
         	<?php if($userNameHasError ?? false) {
-        	    echo "<p class='input-has-error'>" . 'Username has error, it must have a minimum lenght of 2' . '</p>';
+        	    echo "<p class='input-has-error'>" . 'Username has error, it must have a minimum length of 2' . '</p>';
         	}?>
         	
         	<label for="reg-fullname">Name: </label>
         	<input type="text" name="reg-fullname" placeholder="enter name..." value="<?php if($fullNameHasError ?? false){echo htmlentities($fullName ?? '');}?>"/>
         	
         	<?php if($fullNameHasError ?? false) {
-        	    echo "<p class='input-has-error'>" . 'Name has error, it must have a minimum lenght of 2' . '</p>';
+        	    echo "<p class='input-has-error'>" . 'Name has error, it must have a minimum length of 2' . '</p>';
         	}?>
         	
         	<label for="reg-password">Password: </label>
@@ -89,7 +89,7 @@ function startDbConnection() {
         	<input type="password" name="reg-password-confirm" placeholder="enter user confirmation password..." value="<?php if($confirmHasError ?? false){echo htmlentities($confirmationPassword ?? '');}?>"/>
         	
         	<?php if($passwordHasError ?? false) {
-        	    echo "<p class='input-has-error'>" . 'Password has error, it must have a minimum lenght of 5' . '</p>';
+        	    echo "<p class='input-has-error'>" . 'Password has error, it must have a minimum length of 5' . '</p>';
         	}?>
         	<button type="submit">Register</button>
         	
