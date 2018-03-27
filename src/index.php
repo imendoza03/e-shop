@@ -9,47 +9,41 @@
   <link rel="stylesheet" type="text/css" href="/css/home.css" />
 </head>
 <body>
-  <nav>
-    <ul class="menu">
-      <li><a class="logo" href="index.php">E-Shop</a></li>
-      <li><a class="login-button" href="login.php">Login</a></li>
-      <li><a class="registration-button" href="registration.php">Registration</a></li>
-    </ul>
-  </nav>
+  <?php include 'header.php'?>
   <main>
    <section class="articles">
 	   <ul>
 		   <li class="article">
 		   	<img src="img/sneaker_1.jpg" alt="first sneaker">
-		   	<a href="">Details</a>
+		   	<a href="/product-detail.php">Details</a>
 		   </li>
 		   <li class="article">
 		   	<img src="img/sneaker_1.jpg" alt="first sneaker">
-		   	<a href="">Details</a>
+		   	<a href="/product-detail.php">Details</a>
 		   </li>
 		   <li class="article">
 		   	<img src="img/sneaker_3.jpg" alt="Puma sneaker">
-		   	<a href="">Details</a>
+		   	<a href="/product-detail.php">Details</a>
 		   </li>
 		   <li class="article">
 		   	<img src="img/sneaker_3.jpg" alt="Puma sneaker">
-		   	<a href="">Details</a>
+		   	<a href="/product-detail.php">Details</a>
 		   </li>
 		   <li class="article">
 		   	<img src="img/sneaker_3.jpg" alt="Puma sneaker">
-		   	<a href="">Details</a>
+		   	<a href="/product-detail.php">Details</a>
 		   </li>
 		   <li class="article">
 		   	<img src="img/sneaker_3.jpg" alt="Puma sneaker">
-		   	<a href="">Details</a>
+		   	<a href="/product-detail.php">Details</a>
 		   </li>
 		   <li class="article">
 		   	<img src="img/sneaker_3.jpg" alt="Puma sneaker">
-		   	<a href="">Details</a>
+		   	<a href="/product-detail.php">Details</a>
 		   </li>
 		   <li class="article">
 		   	<img src="img/sneaker_3.jpg" alt="Puma sneaker">
-		   	<a href="">Details</a>
+		   	<a href="/product-detail.php">Details</a>
 		   </li>
 	   </ul>
    </section>

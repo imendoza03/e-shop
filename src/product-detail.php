@@ -1,3 +1,8 @@
+<?php
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+    
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +10,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Registration</title>
+  <link rel="stylesheet" type="text/css" href="/css/registrations.css" />
+  <link rel="stylesheet" type="text/css" href="/css/common.css" />
 </head>
 <body>
+	<?php include 'header.php'?>
     <main>
         <section>
         	<article>

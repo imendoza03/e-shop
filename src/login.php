@@ -4,60 +4,53 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userName = $_POST['username'] ?? null;
     $password = $_POST['password'] ?? null;
     
-    $userNameHasError = (strlen($userName) < 3);
-    $passwordHasError = (strlen($password) < 5);
-    
-    if (!$userNameHasError && !$passwordHasError) {
-        $userExists = verifyUser($username ?? '', $password ?? '');
+    if ($userName && $password) {
+        
+        $userExists = verifyUser($userName ?? '', $password ?? '');
         
         if(!$userExists) {
-            echo 'Either the username or password does not exist';
+            $error = 404;
+            $errorMessage ='Either the username or password does not exist';
+            include 'error.php';
             return;
         }
         
-        if(!session_start()) {
-           echo 'Session could not be started.';
-        }
+        session_start();
+        $_SESSION['username'] = $userName;
         
-        $_SESSION['user'] = $userName;
-        $_SESSION['date'] = new DateTime('now');
-        $_SESSION['isLogged'] = true;
-        
-        var_dump($_SESSION);
-        die;
-        
-        redirect("home.php");
+        header('location:/index.php');
+        die();
     }
     
-}
-
-function redirect($url) {
-    header('location:' . $url);
-    exit();
 }
 
 function verifyUser($username, $password){
     
     $dbConnection = startDbConnection();
-    $statement = 'SELECT * FROM USERS WHERE username=:username AND password=:password';
+    $statement = 'SELECT password FROM users WHERE username=:username';
     $preparedQuery = $dbConnection->prepare($statement);
     
     if($preparedQuery) {
         $preparedQuery->bindValue('username', $username);
-        $preparedQuery->bindValue('password', hash('sha256', $password));
         
         if(!$preparedQuery->execute()) {
-            echo 'User has not found in the db';
-            return;
+            $error = 404; 
+            $errorMessage ='User has not found in the db';
+            include 'error.php';
+            die();
         }
         
         $user = $preparedQuery->fetch();
         
-        if(!$user){
-           return false;
+        if($user){
+            $hashedPassword = $user['password'];
+            
+            if(!password_verify($password, $hashedPassword)){
+               return false;
+            } 
+            
+            return true;
         }
-        
-        return true;
     }
 }
 
@@ -65,7 +58,10 @@ function startDbConnection() {
     try {
         $connection = new \PDO('mysql:host=localhost;dbname=eshop', 'root');
     } catch (PDOException $e) {
-        echo $e->getMessage();
+        $error = $e->getCode();
+        $errorMessage = $e->getMessage();
+        include 'error.php';
+        die();
     }
     
     return $connection;
@@ -82,12 +78,7 @@ function startDbConnection() {
   <link rel="stylesheet" type="text/css" href="/css/login.css" />
 </head>
 <body>
-	<nav>
-	    <ul class="menu">
-	      <li><a href="/index.php">E-Shop</a></li>
-	      <li><a href="/registration.php">Register</a></li>
-	    </ul>
-  	</nav>
+	<?php include 'header.php'?>
 	<main>
 	 	<form action="/login.php" method="POST">
 	 		<label for="username">Username: </label>

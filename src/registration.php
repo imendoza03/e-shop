@@ -1,12 +1,7 @@
 <?php
 
-// $userNameHasError = false;
-// $fullNameHasError = false;
-// $passwordHasError = false;
-// $confirmHasError = false;
-// $userIsCreated = false;
-
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    
     $userName = $_POST['reg-username'] ?? null;
     $fullName = $_POST['reg-fullname'] ?? null;
     $password = $_POST['reg-password'] ?? null;
@@ -17,7 +12,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $passwordHasError = (strlen($password) < 5);
     $confirmHasError = ($confirmationPassword != $password);
     
-    if (!$userNameHasError && !$fullNameHasError && !$passwordHasError) {
+    if (!($userNameHasError && $fullNameHasError && $passwordHasError)) {
         $dbConnection = startDbConnection();
         $statement = 'INSERT INTO USERS(username, name, password) VALUES(:username, :name, :password)';
         
@@ -26,14 +21,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if($preparedQuery) {
             $preparedQuery->bindValue('username', $userName);
             $preparedQuery->bindValue('name', $fullName);
-            $preparedQuery->bindValue('password', hash('sha256', $password));
-            
-            $userCreated = true;
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $preparedQuery->bindValue('password', $hashedPassword);
             
             if(!$preparedQuery->execute()) {
                 echo 'Insertion error';
                 return;
             }
+            
+            $userCreated = true;
+            
+            session_start();
+            $_SESSION['username'] = $userName;
+            
+            header('location:/login.php');
         }
     }
 }
@@ -42,7 +43,9 @@ function startDbConnection() {
     try {
         $connection = new \PDO('mysql:host=localhost;dbname=eshop', 'root');
     } catch (PDOException $e) {
-        echo $e->getMessage();
+        $error = $e->getCode();
+        $errorMessage = $e->getMessage();
+        include 'error.php';
     }
     
     return $connection;
@@ -60,12 +63,7 @@ function startDbConnection() {
   <link rel="stylesheet" type="text/css" href="/css/registration.css" />
 </head>
 <body>
-	<nav>
-	    <ul class="menu">
-	      <li><a href="/index.php">E-Shop</a></li>
-	      <li><a href="/login.php">Login</a></li>
-	    </ul>
-  	</nav>
+	<?php include 'header.php'?>
     <main>
     	<h2 class="title">Registration</h2>
         <form action="/registration.php" method="POST">
