@@ -11,18 +11,14 @@
 <body>
 	<?php include 'header.php'?>
     <main>
+        <?php if(!empty($article)) {?>
         <section>
         	<article>
-        		<img src="../img/sneaker_1.jpg">
+        		<img src="<?php echo $article['image']?>">
         		<button type="submit">Add to cart</button>
         	</article>
-        	<article>
-        		<ul>
-        			<li>detail 1</li>
-        			<li>detail 2</li>
-        			<li>detail 3</li>
-        		</ul>
-        	</article>
+        	<span><?php echo $article['description']?></span>
         </section>
+        <?php }?>
     </main>
 </body>

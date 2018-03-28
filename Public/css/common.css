@@ -42,3 +42,8 @@ button{
 	padding: 5px 0px 5px 0px;
 }
 
+.has-error{
+	color: #c0392b;
+}
+
+

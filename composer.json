@@ -1,0 +1,20 @@
+{
+	"name" : "imendoza/e-shop",
+	"description" : "Awesome Ecom project",
+	"type" : "project",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "imendoza03",
+			"email" : "ivanmendoza@gmail.com"
+		}
+	],
+	"minimum-stability" : "dev",
+	"require": {
+		"symfony/routing": "^4.1@dev"
+	},
+	"autoload": {
+		"psr-4": {
+			"":"src/"
+		}
+	}
+}

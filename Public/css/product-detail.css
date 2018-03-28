@@ -1,0 +1,22 @@
+section{
+	display:flex;
+}
+article{
+	flex-direction: column;
+	display: flex;
+}
+
+article img {
+	width:200px;
+	height:200px;
+}
+
+section > span{
+	margin-left: 10px;
+}
+
+button{
+	color: #fff;
+	background-color: #9b59b6;
+}
+

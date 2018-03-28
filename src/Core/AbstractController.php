@@ -1,13 +1,15 @@
 <?php
 
+namespace Core;
+
 class AbstractController
 {
     public function getConnection() 
     {
         try {
             return new \PDO('mysql:host=localhost;dbname=eshop', 'root');
-        } catch (PDOException $e) {
-            $error = $e->getCode();
+        } catch (\PDOException $e) {
+            $errorCode = $e->getCode();
             $errorMessage = $e->getMessage();
             include '../Templates/error.php';
             die();
