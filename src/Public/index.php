@@ -12,7 +12,7 @@ class IndexController extends AbstractController
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             
            $dbConnection = $this->getConnection();
-           $statement = 'SELECT * FROM articles;';
+           $statement = 'SELECT name, description, image FROM articles';
            
            $preparedQuery = $dbConnection->prepare($statement);
            
@@ -28,10 +28,9 @@ class IndexController extends AbstractController
                die();
            }
            
-           $this->$articles = $preparedQuery->fetchAll();
+           $this->articles = $preparedQuery->fetchAll(PDO::FETCH_CLASS);
         }
         
-        include '../Templates/index.php';
     }
     
     public function getArticles(){
@@ -39,9 +38,14 @@ class IndexController extends AbstractController
     }
 }
 
-$controller = new IndexController();
-$controller->loadArticles();
-$articlesa = $controller->getArticles();
-var_dump($articlesa);
-die;
+if($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $controller = new IndexController();
+    $controller->loadArticles();
+    $articles = $controller->getArticles();
+    
+    include '../Templates/index.php';
+}
+
+
+
 

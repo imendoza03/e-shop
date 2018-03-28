@@ -10,6 +10,7 @@
 <header>
     <ul class="menu">
         <li><a href="index.php">E-Shop</a></li>
+        <li><a href="create-article.php">Create Article</a></li>
 		<li><a href="logout.php">Logout</a></li>
 	</ul>
 </header>

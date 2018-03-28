@@ -43,5 +43,18 @@ class CreateArticleController extends AbstractController
     
 }
 
-$controller = new CreateArticleController();
-$controller->processRequest();
+if($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (!empty($_SESSION['username']) {
+        $controller = new CreateArticleController();
+        $controller->processRequest();
+    }
+    
+    include '../Templates/header.php';
+    $errorCode = 403;
+    $errorMessage = 'User must be logged in order to create articles!';
+    include '../Templates/error.php';
+}
+
+
+
+

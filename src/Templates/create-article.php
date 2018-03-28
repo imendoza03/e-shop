@@ -8,6 +8,7 @@
 	</head>
 	
 	<body>
+		<?php include 'header.php'?>
 		<h2>Create article</h2>
 		<form action="/create-article.php" method="POST">
 			<label for="article-name">Name:</label>
