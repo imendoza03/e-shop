@@ -11,7 +11,7 @@
 <body>
 	<?php include 'header.php'?>
 	<main>
-	 	<form action="/login.php" method="POST">
+	 	<form action="/login" method="POST">
 	 		<label for="username">Username: </label>
 	 		<input type="text" name="username" placeholder="enter user name..." value="<?php echo htmlentities($userName ?? '');?>">
 	 

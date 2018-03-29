@@ -16,7 +16,7 @@
 	   	<?php foreach($articles as $article) {?>
 		   <li class="article">
 		   	<img src="<?php echo $article['image'];?>" alt="first sneaker">
-		   	<a href="/product-detail.php?id=<?php echo $article['id'];?>">Details</a>
+		   	<a href="/article/detail?id=<?php echo $article['id'];?>">Details</a>
 		   </li>
 		 <?php }?>
 	   </ul>

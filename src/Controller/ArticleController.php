@@ -5,7 +5,7 @@ use Core\AbstractController;
 
 class ArticleController extends AbstractController
 {
-    public function creationAction()
+    public function createAction()
     {
         session_start();
         
@@ -28,23 +28,15 @@ class ArticleController extends AbstractController
                 
                 $preparedQuery = $dbConnection->prepare($statement);
                 
-                if(!$preparedQuery){
-                    $errorMessage = 'Sql statement could not be prepared';
-                    include '../Templates/error.php';
-                    die();
-                }
+                $this->generatePreparationError($preparedQuery);
                 
                 $preparedQuery->bindValue('name', $articleName);
                 $preparedQuery->bindValue('description', $articleDescription);
                 $preparedQuery->bindValue('image', $articleImage);
                 
-                if(!$preparedQuery->execute()) {
-                    $errorMessage = 'Query could not be executed!';
-                    include '../Templates/error.php';
-                    die();
-                }
+                $this->generateExecutionError($preparedQuery);
                 
-                $this->redirect('index.php');
+                $this->redirect('home');
             }
         }
         
@@ -58,21 +50,13 @@ class ArticleController extends AbstractController
             $id = htmlentities($_GET['id']);
             
             $dbConnection = $this->getConnection();
-            $statement = 'SELECT name, description, image FROM articles WHERE id=:id;';
+            $statement = 'SELECT id, name, description, image FROM articles WHERE id=:id;';
             
             $preparedQuery = $dbConnection->prepare($statement);
             
-            if(!$preparedQuery) {
-                $errorMessage = 'Query was not correctly prepared.';
-                include '../Templates/error.php';
-            }
-            
+            $this->generatePreparationError($preparedQuery);
             $preparedQuery->bindValue('id', $id);
-            
-            if(!$preparedQuery->execute()){
-                $errorMessage = 'Query was not correctly executed.';
-                include '../Templates/error.php';
-            }
+            $this->generateExecutionError($preparedQuery);
             
             $article = $preparedQuery->fetch();
             
@@ -82,6 +66,8 @@ class ArticleController extends AbstractController
                 include '../Templates/error.php';
                 die();
             }
+            
+            $articleId = $article['id'];
             
             include '../Templates/product-detail.php';
         }
@@ -95,18 +81,9 @@ class ArticleController extends AbstractController
             
             $preparedQuery = $dbConnection->prepare($statement);
             
-            if(!$preparedQuery){
-                $errorMessage = 'Sql statement could not be prepared';
-                include '../Templates/error.php';
-                die();
-            }
-            
-            if(!$preparedQuery->execute()) {
-                $errorMessage = 'Query could not be executed!';
-                include '../Templates/error.php';
-                die();
-            }
-            
+            $this->generatePreparationError($preparedQuery);
+            $this->generateExecutionError($preparedQuery);
+           
             $articles = $preparedQuery->fetchAll();
             
             if(empty($articles)) {
@@ -115,7 +92,88 @@ class ArticleController extends AbstractController
                 die();
             }
             
-            include '../Templates/index.php';
+            include '../Templates/home.php';
+        }
+    }
+    
+    public function addToCartAction() 
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            
+            $dbConnection = $this->getConnection();
+            
+            $statement = 'SELECT id,description from articles WHERE id=:articleId';
+            
+            $preparedQuery = $dbConnection->prepare($statement);
+            
+            $this->generatePreparationError($preparedQuery);
+            
+            $preparedQuery->bindValue('articleId', $articleId);
+            
+            $this->generateExecutionError($preparedQuery);
+            
+            $article = $preparedQuery->fetch();
+            
+            if(!$article){
+                $errorCode = 404;
+                $errorMessage = 'This article does not exist';
+                include '../Templates/error.php';
+                die();
+            }
+            
+            $articleId = $article['id'];
+            $articleDescription = $article['desription'];
+            
+            $statement = 'INSET INTO cart(article_id, description) VALUES(:articleId, description);';
+                
+            $preparedQuery = $dbConnection->prepare($statement);
+            
+            $this->generatePreparationError($preparedQuery);
+            
+            $preparedQuery->bindValue('articleId', $articleId);
+            $preparedQuery->bindValue('description', $articleDescription);
+            
+            $this->generateExecutionError($preparedQuery);
+            
+            $this->redirect('cart?id=' . $articleId);
+        }
+    }
+    
+    public function loadCartAction() 
+    {
+        $dbConnection = $this->getConnection();
+        $statement = 'SELECT * FROM cart;';
+        $preparedQuery = $dbConnection->prepare($statement);
+        
+        $this->generatePreparationError($preparedQuery);
+        $this->generateExecutionError($preparedQuery);
+        
+        $cartArticles = $preparedQuery->fetchAll();
+        
+        if(empty($cartArticles)) {
+            $errorMessage = 'There are no articles in the cart';
+            include '../Templates/error.php';
+            die();
+        }
+        
+        include '../Templates/cart.php';
+    }
+
+    //Raises an error in case of query execution failure
+    private function generateExecutionError($preparedQuery) {
+        if(!$preparedQuery->execute()) {
+            $errorMessage = 'Error executing query';
+            include '../Templates/error.php';
+            die();
+        }
+    }
+    
+    //Raises an error in case of query prepartion failure
+    private function generatePreparationError($preparedQuery) {
+        if(!$preparedQuery) {
+            $errorMessage = 'Error preparing query';
+            include '../Templates/error.php';
+            die();
         }
     }
 }

@@ -13,10 +13,12 @@
     <main>
         <?php if(!empty($article)) {?>
         <section>
-        	<article>
-        		<img src="<?php echo $article['image']?>">
-        		<button type="submit">Add to cart</button>
-        	</article>
+        	<form action="/article/addToCart" method="POST">
+            	<article>
+        			<img src="<?php echo $article['image']?>">
+        			<button type="submit">Add to cart</button>
+            	</article>
+        	</form>
         	<span><?php echo $article['description']?></span>
         </section>
         <?php }?>

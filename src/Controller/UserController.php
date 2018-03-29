@@ -40,7 +40,7 @@ class UserController extends AbstractController
                     $this->startSession();
                     $_SESSION['username'] = $userName;
                     
-                    $this->redirect('login.php');
+                    $this->redirect('login');
                 }
             }
         }
@@ -68,7 +68,7 @@ class UserController extends AbstractController
                 session_start();
                 $_SESSION['username'] = $userName;
                 
-                $this->redirect('index.php');
+                $this->redirect('home');
                 die();
             }
             
@@ -81,7 +81,7 @@ class UserController extends AbstractController
         session_start();
         $_SESSION = [];
         session_destroy();
-        header('location:/login.php');
+        $this->redirect('login');
     }
     
     private function verifyUser($username, $password)
