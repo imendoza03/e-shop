@@ -13,7 +13,7 @@
     <main>
         <?php if(!empty($article)) {?>
         <section>
-        	<form action="/article/addToCart" method="POST">
+        	<form action="/article/addToCart/{}" method="POST">
             	<article>
         			<img src="<?php echo $article['image']?>">
         			<button type="submit">Add to cart</button>
