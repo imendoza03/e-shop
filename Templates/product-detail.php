@@ -12,7 +12,7 @@
 	<?php include 'header.php'?>
     <main>
         <?php if(!empty($article)) {?>
-        <section>
+        <section>cd
         	<form action="/article/addToCart/{}" method="POST">
             	<article>
         			<img src="<?php echo $article['image']?>">
